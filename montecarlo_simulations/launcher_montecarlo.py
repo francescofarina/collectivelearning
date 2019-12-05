@@ -99,7 +99,7 @@ for gamma in gammas:
             ####################################################################
 
             ####################################################################
-            ################### LOCAL MODLE CREATION: START ####################
+            ################### LOCAL MODEL CREATION: START ####################
             ####################################################################
             tf.keras.backend.clear_session()
             keras.backend.set_floatx('float64')
@@ -138,7 +138,7 @@ for gamma in gammas:
             MODELS = [CNN, HL2, HL1, SHL]
             if local_rank == 0:
                 print("creating local model...", end="\r")
-            rnd = [0, 1, 2, 3, 0, 2]
+            rnd = [0, 1, 2, 3]
             optimizer = keras.optimizers.Adam()
             model = MODELS[rnd[local_rank]]
 
@@ -149,7 +149,7 @@ for gamma in gammas:
                     loss_value = keras.losses.sparse_categorical_crossentropy(targets, predictions)
                 return loss_value, tape.gradient(loss_value, model.trainable_variables)
             ####################################################################
-            ##################### LOCAL MODLE CREATION: END ####################
+            ##################### LOCAL MODEL CREATION: END ####################
             ####################################################################
 
             algo = CollectiveLearning(agent,
@@ -161,10 +161,10 @@ for gamma in gammas:
                                     tf.convert_to_tensor(private_images_validation[local_rank]),
                                     tf.convert_to_tensor(private_labels_validation[local_rank]),
                                     tf.convert_to_tensor(shared_set),
-                                    tf.convert_to_tensor(x_test[:300]),
-                                    tf.convert_to_tensor(y_test[:300]))
+                                    tf.convert_to_tensor(x_test),
+                                    tf.convert_to_tensor(y_test))
 
-            total_epochs = 1
+            total_epochs = 3
             accuracies = algo.run(
                 epochs=total_epochs,
                 self_learning_epochs=5,
