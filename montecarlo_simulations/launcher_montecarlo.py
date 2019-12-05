@@ -65,6 +65,7 @@ for gamma in gammas:
             ####################################################################
             ################## LOCAL DATASET CREATION: START ###################
             ####################################################################
+            np.random.seed(run)
             if local_rank == 0:
                 print("creating local dataset...", end="\r")
             test_sample_number = len(x_test)
