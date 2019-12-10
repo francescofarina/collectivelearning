@@ -172,8 +172,8 @@ for gamma in gammas:
                                     tf.convert_to_tensor(private_images_validation[local_rank]),
                                     tf.convert_to_tensor(private_labels_validation[local_rank]),
                                     tf.convert_to_tensor(shared_set),
-                                    tf.convert_to_tensor(x_test[:300]),
-                                    tf.convert_to_tensor(y_test[:300]))
+                                    tf.convert_to_tensor(x_test),
+                                    tf.convert_to_tensor(y_test))
 
             total_epochs = 3
             accuracies = algo.run(
